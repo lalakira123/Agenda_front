@@ -20,7 +20,6 @@ function SignIn(){
     const promise = requestAuthApi.signIn(signIn);
     promise.then((response) => {
         const { data } = response;
-        console.log(response.data);
         setUser(data);
         localStorage.setItem('user', JSON.stringify(data));
         navigate('/agenda');
