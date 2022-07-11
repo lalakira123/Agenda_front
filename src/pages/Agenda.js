@@ -14,11 +14,20 @@ import * as requestCommitmentApi from './../services/api/commitment';
 function Agenda(){
   const [ date, setDate ] = useState(dayjs().format('YYYY-MM-DD')); 
   const [ openModal, setOpenModal ] = useState(false);
+  const [ commitments, setCommitments ] = useState([]);
   const { user } = useContext(UserContext);
 
   const config = {
     headers: { Authorization: `Bearer ${user.token}`}
   }
+
+  setInterval(() => {
+    commitments.forEach((commitment) => {
+      if( commitment.alarmHour == `${dayjs().format('HH:mm')}:00`){
+        alert('Ta na hora hein meu xapa');
+      }
+    })
+  }, 60000)
 
   useEffect(() => {
     const dateArray = date.split('-');
@@ -32,7 +41,7 @@ function Agenda(){
       const filterCommitment = data.filter((commitment) => {
         return day == commitment.day && month == commitment.month && year == commitment.year;
       })
-      console.log(filterCommitment);
+      setCommitments(filterCommitment);
     })
     promise.catch((e) => {
       console.log(e.message);
@@ -48,6 +57,12 @@ function Agenda(){
           />
         <p onClick={() => setOpenModal(true)}>Adicionar um novo compromisso</p>
         <PostCommitment isOpen={openModal} setOpenModal={setOpenModal}/>
+        <p>Visualizando: {date}</p>
+        {commitments.map((commitment) => {
+            return (
+                <p>{commitment.alarmHour}</p>
+            );
+        })}
       </Content>
     </PageContainer>
   );

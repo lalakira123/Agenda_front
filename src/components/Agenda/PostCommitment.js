@@ -34,6 +34,7 @@ function PostCommitment({isOpen, setOpenModal}){
     const promise = requestCommitmentApi.postCommitment(commitment, config);
     promise.then(() => {
         setOpenModal(false);
+        setCommitment({type:"", place:"", startHour:"", finishHour:"", alarmHour:"", date:""});
     })
     promise.catch((e) => {
         console.log(e.message);
