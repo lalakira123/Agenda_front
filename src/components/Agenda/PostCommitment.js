@@ -20,12 +20,12 @@ function PostCommitment({isOpen, setOpenModal}){
 
   const customStyles = {
     content: {
-      top: "50%",
-      left: "50%",
       flexDirection: "column",
       justifyContent: "space-evenly",
       background: "#BEBEBE",
-      transform: "translate(-50%, -50%)",
+      top: '30px',
+      right: 'auto',
+      left: '40%'
     }
   };
 
@@ -33,11 +33,11 @@ function PostCommitment({isOpen, setOpenModal}){
     e.preventDefault();
     const promise = requestCommitmentApi.postCommitment(commitment, config);
     promise.then(() => {
-        setOpenModal(false);
-        setCommitment({type:"", place:"", startHour:"", finishHour:"", alarmHour:"", date:""});
+      setOpenModal(false);
+      setCommitment({type:"", place:"", startHour:"", finishHour:"", alarmHour:"", date:""});
     })
     promise.catch((e) => {
-        console.log(e.message);
+      console.log(e.message);
     })
   }
 
@@ -106,5 +106,7 @@ export default PostCommitment;
 
 const Div = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `
