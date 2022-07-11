@@ -59,5 +59,9 @@ const Content = styled.span`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  h1 {
+    font-size: 30px;
+    margin-bottom: 30px;
+  }
 `
 

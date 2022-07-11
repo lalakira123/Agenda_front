@@ -11,5 +11,8 @@ function PageContainer({children}){
 export default PageContainer;
 
 const Container = styled.main`
+  padding: 120px 20px;
+  @media (min-width: 600px){
     padding: 120px;
+  }
 `
