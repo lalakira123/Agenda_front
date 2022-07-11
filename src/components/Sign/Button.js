@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-function Button({title, action}){
+function Button({title}){
   return(
     <Style>
-      <button onClick={action}>{title}</button>
+      <button type='submit'>{title}</button>
     </Style>
   );
 }

@@ -12,10 +12,10 @@ function SignUp(){
   const [ signUp, setSignUp ] = useState({name:"", email:"", password:"", confirmPassword:""});
   const navigate = useNavigate();
 
-  function handleSignUp(){
+  function handleSignUp(e){
+    e.preventDefault();
     const promise = requestAuthApi.signUp(signUp);
     promise.then((response) => {
-      console.log(response.data);
       navigate('/');
     });
     promise.catch((e) => {
@@ -27,39 +27,41 @@ function SignUp(){
     <PageContainer>
       <Content>
         <h1>Agenda</h1>
-        <Input 
-          property={'name'} 
-          type={'text'} 
-          placeholder={'Nome'} 
-          value={signUp.name}
-          setState={setSignUp}
-          state={signUp}
-          />
-        <Input 
-          property={'email'} 
-          type={'email'} 
-          placeholder={'E-mail'} 
-          value={signUp.email}
-          setState={setSignUp}
-          state={signUp}
-          /> 
-        <Input 
-          property={'password'} 
-          type={'password'} 
-          placeholder={'Senha'} 
-          value={signUp.password}
-          setState={setSignUp}
-          state={signUp}
-          />
-        <Input 
-          property={'confirmPassword'} 
-          type={'password'} 
-          placeholder={'Confirmar Senha'} 
-          value={signUp.confirmPassword}
-          setState={setSignUp}
-          state={signUp}
-          /> 
-        <Button title={'Cadastre-se'} action={handleSignUp}/>
+        <form onSubmit={handleSignUp}>
+          <Input 
+            property={'name'} 
+            type={'text'} 
+            placeholder={'Nome'} 
+            value={signUp.name}
+            setState={setSignUp}
+            state={signUp}
+            />
+          <Input 
+            property={'email'} 
+            type={'email'} 
+            placeholder={'E-mail'} 
+            value={signUp.email}
+            setState={setSignUp}
+            state={signUp}
+            /> 
+          <Input 
+            property={'password'} 
+            type={'password'} 
+            placeholder={'Senha'} 
+            value={signUp.password}
+            setState={setSignUp}
+            state={signUp}
+            />
+          <Input 
+            property={'confirmPassword'} 
+            type={'password'} 
+            placeholder={'Confirmar Senha'} 
+            value={signUp.confirmPassword}
+            setState={setSignUp}
+            state={signUp}
+            /> 
+          <Button title={'Cadastre-se'}/>
+        </form>
         <Link to='/'>
           <p>Já possui uma conta? Entre aqui!</p>
         </Link>
@@ -78,5 +80,11 @@ const Content = styled.span`
   h1 {
     font-size: 30px;
     margin-bottom: 30px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 `

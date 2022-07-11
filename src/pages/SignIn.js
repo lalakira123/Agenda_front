@@ -15,7 +15,8 @@ function SignIn(){
   const { setUser } = useContext(UserContext); 
   const navigate = useNavigate();
 
-  function handleSignIn(){
+  function handleSignIn(e){
+    e.preventDefault();
     const promise = requestAuthApi.signIn(signIn);
     promise.then((response) => {
         const { data } = response;
@@ -33,23 +34,25 @@ function SignIn(){
     <PageContainer>
       <Content>
         <h1>Agenda</h1>
-        <Input 
-          property={'email'} 
-          type={'email'} 
-          placeholder={'E-mail'} 
-          value={signIn.email}
-          setState={setSignIn}
-          state={signIn}
-          />
-        <Input 
-          property={'password'} 
-          type={'password'} 
-          placeholder={'Senha'} 
-          value={signIn.password}
-          setState={setSignIn}
-          state={signIn}
-          />  
-        <Button title={'Entrar'} action={handleSignIn}/>
+        <form onSubmit={handleSignIn}>
+          <Input 
+            property={'email'} 
+            type={'email'} 
+            placeholder={'E-mail'} 
+            value={signIn.email}
+            setState={setSignIn}
+            state={signIn}
+            />
+          <Input 
+            property={'password'} 
+            type={'password'} 
+            placeholder={'Senha'} 
+            value={signIn.password}
+            setState={setSignIn}
+            state={signIn}
+            />  
+          <Button title={'Entrar'}/>
+        </form>
         <Link to='/signup'>
           <p>Ainda não possui uma conta? Cadastre-se aqui!</p>
         </Link>
@@ -68,6 +71,12 @@ const Content = styled.span`
   h1 {
     font-size: 30px;
     margin-bottom: 30px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 `
 
