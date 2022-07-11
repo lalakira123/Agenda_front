@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 
 import PageContainer from './../components/PageContainer';
 import PostCommitment from '../components/Agenda/PostCommitment';
+import Card from './../components/Agenda/Card';
 
 import { UserContext } from './../contexts/UserContext';
 
@@ -27,7 +28,7 @@ function Agenda(){
         alert('Ta na hora hein meu xapa');
       }
     })
-  }, 60000)
+  }, 20000)
 
   useEffect(() => {
     const dateArray = date.split('-');
@@ -49,20 +50,37 @@ function Agenda(){
   },[date]);
 
   return (
-    <PageContainer> 
+    <PageContainer>
+      <Title>Olá, {user.username}! Tem algum agendamento para hoje?</Title> 
       <Content>
-        <h1>Olá, {user.username}! Tem algum agendamento para hoje?</h1>
-        <Calendar 
-          onClickDay={(value, event) => setDate(dayjs(value).format('YYYY-MM-DD'))}
-          />
-        <p onClick={() => setOpenModal(true)}>Adicionar um novo compromisso</p>
-        <PostCommitment isOpen={openModal} setOpenModal={setOpenModal}/>
-        <p>Visualizando: {date}</p>
-        {commitments.map((commitment) => {
-            return (
-                <p>{commitment.alarmHour}</p>
-            );
-        })}
+        <Create>
+          <Calendar 
+            onClickDay={(value, event) => setDate(dayjs(value).format('YYYY-MM-DD'))}
+            />
+          <p onClick={() => setOpenModal(true)}>Adicionar um novo compromisso</p>
+          <PostCommitment isOpen={openModal} setOpenModal={setOpenModal}/>
+        </Create>
+        <List>
+          <p>{date}</p>
+          { commitments.length !== 0 ?
+            commitments.map((commitment) => {
+              const { id, type, place, startHour, finishHour, alarmHour } = commitment;
+              return (
+                <Card 
+                  key={id}
+                  id={id}
+                  type={type} 
+                  place={place} 
+                  startHour={startHour} 
+                  finishHour={finishHour} 
+                  alarmHour={alarmHour}
+                  />
+              );
+            })
+            :
+            <p>Não há nenhum compromisso neste dia!</p>
+          }
+        </List>
       </Content>
     </PageContainer>
   );
@@ -70,6 +88,40 @@ function Agenda(){
 
 export default Agenda;
 
-const Content = styled.span`
+const Title = styled.h1`
+  font-size: 23px;
+  margin-bottom: 30px;
 `
+
+const Content = styled.span`
+  display: flex;
+  justify-content: center;
+`
+
+const Create = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p {
+    margin-top: 30px;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    padding: 10px;
+    background-color: #1087FF;
+    color: #FFFFFF;
+  }
+`
+
+const List = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  p {
+    font-weight: 700;
+    font-size: 20px;
+  }
+`
+
+
 

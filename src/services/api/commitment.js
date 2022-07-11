@@ -3,14 +3,19 @@ import axios from 'axios';
 import url from './api';
 
 function listCommitments(day, config){
-    return axios.get(`${url}/commitment/day?number=${day}`, config);
+  return axios.get(`${url}/commitment/day?number=${day}`, config);
 }
 
 function postCommitment(info, config){
-    return axios.post(`${url}/commitment`, info, config);
+  return axios.post(`${url}/commitment`, info, config);
+}
+
+function deleteCommitment(id, config){
+  return axios.delete(`${url}/commitment/${id}`, config);
 }
 
 export {
     listCommitments,
-    postCommitment
+    postCommitment,
+    deleteCommitment
 }
