@@ -5,13 +5,19 @@ import { FaTimes } from "react-icons/fa";
 
 import * as requestCommitmentApi from './../../services/api/commitment';
 
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from './../../contexts/UserContext';
 
 import Input from './Input';
 
-function PostCommitment({isOpen, setOpenModal}){
+function EditCommitment({id, isOpen, setOpenModal, type, place, startHour, finishHour, alarmHour, date}){
   const [ commitment, setCommitment ] = useState(
-    {type:"", place:"", startHour:"", finishHour:"", alarmHour:"", date:""}
+    {
+      type, 
+      place, 
+      startHour: startHour.substring(0, 5), 
+      finishHour: finishHour.substring(0, 5), 
+      alarmHour: alarmHour.substring(0, 5), 
+      date}
   );
   const { user } = useContext(UserContext);
 
@@ -30,12 +36,11 @@ function PostCommitment({isOpen, setOpenModal}){
     }
   };
 
-  function postCommitment(e){
+  function editCommitment(e){
     e.preventDefault();
-    const promise = requestCommitmentApi.postCommitment(commitment, config);
+    const promise = requestCommitmentApi.editCommitment(id, commitment, config);
     promise.then(() => {
       setOpenModal(false);
-      setCommitment({type:"", place:"", startHour:"", finishHour:"", alarmHour:"", date:""});
     })
     promise.catch((e) => {
       console.log(e.message);
@@ -45,10 +50,10 @@ function PostCommitment({isOpen, setOpenModal}){
   return(
     <Modal isOpen={isOpen} style={customStyles}>
       <Div>
-        <p>Novo Compromisso</p>
+        <p>Editar Compromisso: {type}</p>
         <p onClick={() => setOpenModal(false)}><FaTimes/></p>
       </Div>
-      <form onSubmit={postCommitment}>
+      <form onSubmit={editCommitment}>
         <Input 
           placeholder='Compromisso'
           property={'type'} 
@@ -97,13 +102,13 @@ function PostCommitment({isOpen, setOpenModal}){
           setState={setCommitment}
           state={commitment}
           />
-        <button type='submit'>Criar</button>
+        <button type='submit'>Editar</button>
       </form>
     </Modal>
   );
 }
 
-export default PostCommitment;
+export default EditCommitment;
 
 const Div = styled.div`
   display: flex;

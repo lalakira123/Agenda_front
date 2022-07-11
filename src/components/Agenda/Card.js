@@ -1,19 +1,22 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
+import { FaTrash, FaPen } from "react-icons/fa";
 
 import { UserContext } from '../../contexts/UserContext';
 
 import * as requestCommitmentApi from './../../services/api/commitment';
+import EditCommitment from './EditCommitment';
 
-function Card({id, type, place, startHour, finishHour, alarmHour}){
-  const { user } = useContext(UserContext);
+function Card({id, type, place, startHour, finishHour, alarmHour, year, month, day}){
+    const [ modal, setModal ] = useState();
+    const { user } = useContext(UserContext);
 
   const config = {
     headers: {Authorization: `Bearer ${user.token}`}
   }
 
   function deleteCommitment(id){
-    if(window.confirm(`Realmente gostaria de deletar o compromisso: ${type}`)){
+    if(window.confirm(`Realmente gostaria de deletar o compromisso: ${type}?`)){
       const promise = requestCommitmentApi.deleteCommitment(id, config);
       promise.then(() => {
         console.log('Delete Sucess');
@@ -30,7 +33,19 @@ function Card({id, type, place, startHour, finishHour, alarmHour}){
       <p>Lugar: {place}</p>
       <p>Horário: {startHour} - {finishHour}</p>
       <p>Alarme: {alarmHour}</p>
-      <span onClick={() => deleteCommitment(id)}>Deletar</span>
+      <Delete><FaTrash onClick={() => deleteCommitment(id)} /></Delete>
+      <Edit><FaPen onClick={() => setModal(true)} /></Edit>
+      <EditCommitment 
+        id={id}
+        isOpen={modal}
+        setOpenModal={setModal}
+        type={type}
+        place={place}
+        startHour={startHour}
+        finishHour={finishHour}
+        alarmHour={alarmHour}
+        date={`${year}-${month}-${day}`}
+        />
     </Commitment>
   );
 }
@@ -45,9 +60,16 @@ const Commitment = styled.div`
   h2 {
     font-size: 20px;
   }
-  span {
-    position: absolute;
-    top: 12px;
-    right: 0;
-  }
+`
+
+const Delete = styled.span`
+  position: absolute;
+  top: 12px;
+  right: 0;
+`
+
+const Edit = styled.span`
+  position: absolute;
+  top: 12px;
+  right: 30px;
 `

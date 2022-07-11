@@ -64,7 +64,7 @@ function Agenda(){
           <p>{date}</p>
           { commitments.length !== 0 ?
             commitments.map((commitment) => {
-              const { id, type, place, startHour, finishHour, alarmHour } = commitment;
+              const { id, type, place, startHour, finishHour, alarmHour, year, month, day } = commitment;
               return (
                 <Card 
                   key={id}
@@ -74,6 +74,9 @@ function Agenda(){
                   startHour={startHour} 
                   finishHour={finishHour} 
                   alarmHour={alarmHour}
+                  year={year}
+                  month={month}
+                  day={day}
                   />
               );
             })
