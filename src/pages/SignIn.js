@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styled from "styled-components";
 import { Link, useNavigate } from 'react-router-dom';
+
+import { UserContext } from './../contexts/UserContext';
 
 import PageContainer from "./../components/PageContainer";
 import Input from './../components/Sign/Input';
@@ -10,13 +12,17 @@ import * as requestAuthApi from './../services/api/auth';
 
 function SignIn(){
   const [ signIn, setSignIn ] = useState({email:"", password:""});
+  const { setUser } = useContext(UserContext); 
   const navigate = useNavigate();
 
   function handleSignIn(){
     const promise = requestAuthApi.signIn(signIn);
     promise.then((response) => {
+        const { data } = response;
         console.log(response.data);
-        navigate('/signup');
+        setUser(data);
+        localStorage.setItem('user', JSON.stringify(data));
+        navigate('/agenda');
     });
     promise.catch((e) => {
         console.log(e.message);
