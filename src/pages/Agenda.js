@@ -51,7 +51,7 @@ function Agenda(){
 
   return (
     <PageContainer>
-      <Title>Olá, {user.username}! Tem algum agendamento para hoje?</Title> 
+      <Title>Olá, {user.username}! Tem algum compromisso hoje?</Title> 
       <Content>
         <Create>
           <Calendar 

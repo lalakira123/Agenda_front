@@ -1,14 +1,17 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { FaTrash, FaPen } from "react-icons/fa";
+import { FaTrash, FaPen, FaRegAddressBook } from "react-icons/fa";
 
 import { UserContext } from '../../contexts/UserContext';
 
 import * as requestCommitmentApi from './../../services/api/commitment';
+import * as requestParticipantsApi from './../../services/api/participants';
+
 import EditCommitment from './EditCommitment';
 
 function Card({id, type, place, startHour, finishHour, alarmHour, year, month, day}){
     const [ modal, setModal ] = useState();
+    const [ participants, setParticipants ] = useState([]);
     const { user } = useContext(UserContext);
 
   const config = {
@@ -27,26 +30,49 @@ function Card({id, type, place, startHour, finishHour, alarmHour, year, month, d
     }
   }
 
+  useEffect(() => {
+    const promise = requestParticipantsApi.listParticipants(id, config);
+    promise.then((response) => {
+      const { data } = response;
+      setParticipants(data);
+    })
+    promise.catch((e) => {
+      console.log(e.message);
+    });
+  }, []);
+
   return(
-    <Commitment>
-      <h2>{type}</h2>
-      <p>Lugar: {place}</p>
-      <p>Horário: {startHour} - {finishHour}</p>
-      <p>Alarme: {alarmHour}</p>
-      <Delete><FaTrash onClick={() => deleteCommitment(id)} /></Delete>
-      <Edit><FaPen onClick={() => setModal(true)} /></Edit>
-      <EditCommitment 
-        id={id}
-        isOpen={modal}
-        setOpenModal={setModal}
-        type={type}
-        place={place}
-        startHour={startHour}
-        finishHour={finishHour}
-        alarmHour={alarmHour}
-        date={`${year}-${month}-${day}`}
-        />
-    </Commitment>
+      <Commitment>
+        <h2>{type}</h2>
+        <p>Lugar: {place}</p>
+        <p>Horário: {startHour} - {finishHour}</p>
+        <p>Alarme: {alarmHour}</p>
+        <Delete><FaTrash onClick={() => deleteCommitment(id)} /></Delete>
+        <Edit><FaPen onClick={() => setModal(true)} /></Edit>
+        <Participant><FaRegAddressBook /></Participant>
+        <EditCommitment 
+          id={id}
+          isOpen={modal}
+          setOpenModal={setModal}
+          type={type}
+          place={place}
+          startHour={startHour}
+          finishHour={finishHour}
+          alarmHour={alarmHour}
+          date={`${year}-${month}-${day}`}
+          />
+        <p>Participantes:</p>
+        { participants.length !== 0 ?
+          participants.map((participant) => {
+            const { name, email } = participant;
+            return (
+              <p>Nome: {name} Email: {email}</p>
+            )
+          })
+          :
+          <p>Não há participantes ainda</p>
+        }
+      </Commitment>
   );
 }
 
@@ -72,4 +98,10 @@ const Edit = styled.span`
   position: absolute;
   top: 12px;
   right: 30px;
+`
+
+const Participant = styled.span`
+  position: absolute;
+  top: 12px;
+  right: 60px;
 `
