@@ -5,6 +5,7 @@ import 'react-calendar/dist/Calendar.css';
 import dayjs from 'dayjs';
 
 import PageContainer from './../components/PageContainer';
+import PostCommitment from '../components/Agenda/PostCommitment';
 
 import { UserContext } from './../contexts/UserContext';
 
@@ -12,6 +13,7 @@ import * as requestCommitmentApi from './../services/api/commitment';
 
 function Agenda(){
   const [ date, setDate ] = useState(dayjs().format('YYYY-MM-DD')); 
+  const [ openModal, setOpenModal ] = useState(false);
   const { user } = useContext(UserContext);
 
   const config = {
@@ -44,6 +46,8 @@ function Agenda(){
         <Calendar 
           onClickDay={(value, event) => setDate(dayjs(value).format('YYYY-MM-DD'))}
           />
+        <p onClick={() => setOpenModal(true)}>Adicionar um novo compromisso</p>
+        <PostCommitment isOpen={openModal} setOpenModal={setOpenModal}/>
       </Content>
     </PageContainer>
   );
@@ -53,3 +57,4 @@ export default Agenda;
 
 const Content = styled.span`
 `
+
