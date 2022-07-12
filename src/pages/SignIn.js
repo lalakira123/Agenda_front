@@ -4,11 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { UserContext } from './../contexts/UserContext';
 
+import Header from './../components/Header';
 import PageContainer from "./../components/PageContainer";
 import Input from './../components/Sign/Input';
 import Button from './../components/Sign/Button';
 
 import * as requestAuthApi from './../services/api/auth';
+
 
 function SignIn(){
   const [ signIn, setSignIn ] = useState({email:"", password:""});
@@ -30,9 +32,10 @@ function SignIn(){
   }
 
   return(
+    <>
+    <Header />
     <PageContainer>
       <Content>
-        <h1>Agenda</h1>
         <form onSubmit={handleSignIn}>
           <Input 
             property={'email'} 
@@ -57,6 +60,7 @@ function SignIn(){
         </Link>
       </Content>
     </PageContainer>
+    </>
   );
 }
 
@@ -67,10 +71,6 @@ const Content = styled.span`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  h1 {
-    font-size: 30px;
-    margin-bottom: 30px;
-  }
   form {
     display: flex;
     flex-direction: column;

@@ -109,6 +109,9 @@ const Title = styled.h1`
 const Content = styled.span`
   display: flex;
   justify-content: center;
+  @media (max-width: 600px){
+    flex-direction: column;
+  }
 `
 
 const Create = styled.div`
@@ -133,6 +136,9 @@ const List = styled.div`
   h1 {
     font-size: 30px;
     margin-bottom: 15px;
+  }
+  @media (max-width: 600px){
+    margin-top: 40px;
   }
 `
 

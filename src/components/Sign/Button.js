@@ -18,7 +18,7 @@ const Style = styled.div`
     font-weight: 700;
     margin-bottom: 40px;
     color: #FFFFFF;
-    background-color: #007BF7;
+    background-color: #000000;
     border-radius: 12px;
     border: none;
     font-family: 'Lexend Deca', sans-serif;
