@@ -34,6 +34,18 @@ function Card({id, type, place, startHour, finishHour, alarmHour, year, month, d
     }
   }
 
+  function deleteParticipant(id, name){
+    if(window.confirm(`Realmente gostaria de deletar o participant: ${name}?`)){
+      const promise = requestParticipantsApi.deleteParticipant(id, config);
+      promise.then(() => {
+        console.log('Delete Sucess');
+      })
+      promise.catch((e) => {
+        console.log(e.message);
+      })
+    }
+  }
+
   useEffect(() => {
     const promise = requestParticipantsApi.listParticipants(id, config);
     promise.then((response) => {
@@ -73,10 +85,10 @@ function Card({id, type, place, startHour, finishHour, alarmHour, year, month, d
         <p><strong>Participantes</strong>:</p>
         { participants.length !== 0 ?
           participants.map((participant) => {
-            const { name, email } = participant;
+            const { id, name, email } = participant;
             return (
               <>
-              <p><FaTimes/>Nome: {name}</p>
+              <p><FaTimes onClick={() => deleteParticipant(id, name)}/>Nome: {name}</p>
               <p>&nbsp;&nbsp;&nbsp;&nbsp;Email: {email}</p>
               </>
             )

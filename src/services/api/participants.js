@@ -10,7 +10,12 @@ function postParticipant(participant, config){
   return axios.post(`${url}/participant`, participant, config);
 }
 
+function deleteParticipant(id, config){
+  return axios.delete(`${url}/participant/${id}`, config);
+}
+
 export {
   listParticipants,
-  postParticipant
+  postParticipant,
+  deleteParticipant
 }
