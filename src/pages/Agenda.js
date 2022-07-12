@@ -28,7 +28,7 @@ function Agenda(){
         alert('Ta na hora hein meu xapa');
       }
     })
-  }, 20000)
+  }, 60000);
 
   useEffect(() => {
     const dateArray = date.split('-');

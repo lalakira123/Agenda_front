@@ -29,10 +29,11 @@ function EditCommitment({id, isOpen, setOpenModal, type, place, startHour, finis
     content: {
       flexDirection: "column",
       justifyContent: "space-evenly",
-      background: "#BEBEBE",
-      top: '30px',
+      background: "#000000",
+      top: '170px',
       right: 'auto',
-      left: '40%'
+      left: '40%',
+      bottom: '12%'
     }
   };
 
@@ -53,7 +54,7 @@ function EditCommitment({id, isOpen, setOpenModal, type, place, startHour, finis
         <p>Editar Compromisso: {type}</p>
         <p onClick={() => setOpenModal(false)}><FaTimes/></p>
       </Div>
-      <form onSubmit={editCommitment}>
+      <Form onSubmit={editCommitment}>
         <Input 
           placeholder='Compromisso'
           property={'type'} 
@@ -103,7 +104,7 @@ function EditCommitment({id, isOpen, setOpenModal, type, place, startHour, finis
           state={commitment}
           />
         <button type='submit'>Editar</button>
-      </form>
+      </Form>
     </Modal>
   );
 }
@@ -115,4 +116,26 @@ const Div = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  p {
+    color: #FFFFFF;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+`
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  button {
+    width: 200px;
+    margin-top: 10px;
+    border-radius: 50px;
+    height: 50px;
+    background-color: #000000;
+    font-weight: 700;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    font-size: 15px;
+  }
 `
