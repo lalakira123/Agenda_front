@@ -27,7 +27,12 @@ function Agenda(){
 
   setInterval(() => {
     commitments.forEach((commitment) => {
-      if( commitment.alarmHour == `${dayjs().format('HH:mm')}:00`){
+      if( 
+          commitment.alarmHour == `${dayjs().format('HH:mm')}:00` && 
+          `${dayjs().format('D')}` == commitment.day && 
+          `${dayjs().format('M')}` == commitment.month && 
+          `${dayjs().format('YYYY')}` == commitment.year
+      ){
         alert(`AVISO: o seu compromisso, ${commitment.type}, já vai começar!`);
       }
     })
@@ -111,6 +116,7 @@ const Content = styled.span`
   justify-content: center;
   @media (max-width: 600px){
     flex-direction: column;
+    
   }
 `
 
