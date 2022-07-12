@@ -10,10 +10,12 @@ import Agenda from './pages/Agenda';
 import PrivateRoute from './components/PrivateRoute';
 
 import { UserProvider } from './contexts/UserContext';
+import { UpdateProvider } from './contexts/UpdateContext';
 
 function App() {
   return (
     <UserProvider>
+    <UpdateProvider>  
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<SignIn />}/>
@@ -25,6 +27,7 @@ function App() {
           } />
       </Routes>
     </BrowserRouter>
+    </UpdateProvider>
     </UserProvider>
   );
 }

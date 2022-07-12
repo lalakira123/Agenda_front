@@ -6,6 +6,7 @@ import { FaTimes } from "react-icons/fa";
 import * as requestCommitmentApi from './../../services/api/commitment';
 
 import { UserContext } from './../../contexts/UserContext';
+import { UpdateContext } from './../../contexts/UpdateContext';
 
 import Input from './Input';
 
@@ -20,6 +21,7 @@ function EditCommitment({id, isOpen, setOpenModal, type, place, startHour, finis
       date}
   );
   const { user } = useContext(UserContext);
+  const { update, setUpdate } = useContext(UpdateContext);
 
   const config = {
     headers: {Authorization: `Bearer ${user.token}`}
@@ -42,6 +44,7 @@ function EditCommitment({id, isOpen, setOpenModal, type, place, startHour, finis
     const promise = requestCommitmentApi.editCommitment(id, commitment, config);
     promise.then(() => {
       setOpenModal(false);
+      setUpdate(update+1);
     })
     promise.catch((e) => {
       console.log(e.message);

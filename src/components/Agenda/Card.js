@@ -2,7 +2,8 @@ import { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaTrash, FaPen, FaRegAddressBook, FaTimes } from "react-icons/fa";
 
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from './../../contexts/UserContext';
+import { UpdateContext } from './../../contexts/UpdateContext';
 
 import * as requestCommitmentApi from './../../services/api/commitment';
 import * as requestParticipantsApi from './../../services/api/participants';
@@ -17,6 +18,7 @@ function Card({id, type, place, startHour, finishHour, alarmHour, year, month, d
     const [ modalParticipant, setModalParticipant ] = useState();
     const [ participants, setParticipants ] = useState([]);
     const { user } = useContext(UserContext);
+    const { update, setUpdate } = useContext(UpdateContext);
 
   const config = {
     headers: {Authorization: `Bearer ${user.token}`}
@@ -27,6 +29,7 @@ function Card({id, type, place, startHour, finishHour, alarmHour, year, month, d
       const promise = requestCommitmentApi.deleteCommitment(id, config);
       promise.then(() => {
         console.log('Delete Sucess');
+        setUpdate(update+1);
       })
       promise.catch((e) => {
         console.log(e.message);
@@ -39,6 +42,7 @@ function Card({id, type, place, startHour, finishHour, alarmHour, year, month, d
       const promise = requestParticipantsApi.deleteParticipant(id, config);
       promise.then(() => {
         console.log('Delete Sucess');
+        setUpdate(update+1);
       })
       promise.catch((e) => {
         console.log(e.message);
@@ -55,7 +59,7 @@ function Card({id, type, place, startHour, finishHour, alarmHour, year, month, d
     promise.catch((e) => {
       console.log(e.message);
     });
-  }, []);
+  }, [update]);
 
   return(
       <Commitment>

@@ -5,7 +5,8 @@ import { FaTimes } from "react-icons/fa";
 
 import * as requestCommitmentApi from './../../services/api/commitment';
 
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from './../../contexts/UserContext';
+import { UpdateContext } from './../../contexts/UpdateContext';
 
 import Input from './Input';
 
@@ -14,6 +15,7 @@ function PostCommitment({isOpen, setOpenModal}){
     {type:"", place:"", startHour:"", finishHour:"", alarmHour:"", date:""}
   );
   const { user } = useContext(UserContext);
+  const { update, setUpdate } = useContext(UpdateContext);
 
   const config = {
     headers: {Authorization: `Bearer ${user.token}`}
@@ -37,6 +39,7 @@ function PostCommitment({isOpen, setOpenModal}){
     promise.then(() => {
       setOpenModal(false);
       setCommitment({type:"", place:"", startHour:"", finishHour:"", alarmHour:"", date:""});
+      setUpdate(update+1);
     })
     promise.catch((e) => {
       console.log(e.message);

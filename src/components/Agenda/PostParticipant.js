@@ -5,13 +5,15 @@ import { FaTimes } from "react-icons/fa";
 
 import * as requestParticipantApi from './../../services/api/participants';
 
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from './../../contexts/UserContext';
+import { UpdateContext } from './../../contexts/UpdateContext';
 
 import Input from './Input';
 
 function PostParticipant({isOpen, setOpenModal, commitmentId}){
   const [ participant, setParticipant ] = useState({commitmentId: commitmentId, name:"", email:""});
   const { user } = useContext(UserContext);
+  const { update, setUpdate } = useContext(UpdateContext);
 
   const config = {
     headers: {Authorization: `Bearer ${user.token}`}
@@ -35,6 +37,7 @@ function PostParticipant({isOpen, setOpenModal, commitmentId}){
     promise.then(() => {
       setOpenModal(false);
       setParticipant({commitmentId:"", name:"", email:""});
+      setUpdate(update+1);
     })
     promise.catch((e) => {
       console.log(e.message);

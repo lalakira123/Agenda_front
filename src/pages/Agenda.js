@@ -9,6 +9,7 @@ import PostCommitment from '../components/Agenda/PostCommitment';
 import Card from './../components/Agenda/Card';
 
 import { UserContext } from './../contexts/UserContext';
+import { UpdateContext } from './../contexts/UpdateContext';
 
 import * as requestCommitmentApi from './../services/api/commitment';
 
@@ -17,6 +18,7 @@ function Agenda(){
   const [ openModal, setOpenModal ] = useState(false);
   const [ commitments, setCommitments ] = useState([]);
   const { user } = useContext(UserContext);
+  const { update, setUpdate } = useContext(UpdateContext);
 
   const config = {
     headers: { Authorization: `Bearer ${user.token}`}
@@ -47,7 +49,7 @@ function Agenda(){
     promise.catch((e) => {
       console.log(e.message);
     })
-  },[date]);
+  },[date, update]);
 
   return (
     <>
