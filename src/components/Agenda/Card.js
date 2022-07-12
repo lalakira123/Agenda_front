@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { FaTrash, FaPen, FaRegAddressBook } from "react-icons/fa";
+import { FaTrash, FaPen, FaRegAddressBook, FaTimes } from "react-icons/fa";
 
 import { UserContext } from '../../contexts/UserContext';
 
@@ -8,11 +8,13 @@ import * as requestCommitmentApi from './../../services/api/commitment';
 import * as requestParticipantsApi from './../../services/api/participants';
 
 import EditCommitment from './EditCommitment';
+import PostParticipant from './PostParticipant';
 
 import './../../assets/css/calendar.css';
 
 function Card({id, type, place, startHour, finishHour, alarmHour, year, month, day}){
     const [ modal, setModal ] = useState();
+    const [ modalParticipant, setModalParticipant ] = useState();
     const [ participants, setParticipants ] = useState([]);
     const { user } = useContext(UserContext);
 
@@ -51,7 +53,7 @@ function Card({id, type, place, startHour, finishHour, alarmHour, year, month, d
         <p><strong>Alarme</strong>: {alarmHour}</p>
         <Delete><FaTrash onClick={() => deleteCommitment(id)} /></Delete>
         <Edit><FaPen onClick={() => setModal(true)} /></Edit>
-        <Participant><FaRegAddressBook /></Participant>
+        <Participant><FaRegAddressBook onClick={() => setModalParticipant(true)}/></Participant>
         <EditCommitment 
           id={id}
           isOpen={modal}
@@ -63,12 +65,20 @@ function Card({id, type, place, startHour, finishHour, alarmHour, year, month, d
           alarmHour={alarmHour}
           date={`${year}-${month}-${day}`}
           />
+        <PostParticipant 
+          isOpen={modalParticipant} 
+          setOpenModal={setModalParticipant}
+          commitmentId={id}
+          />
         <p><strong>Participantes</strong>:</p>
         { participants.length !== 0 ?
           participants.map((participant) => {
             const { name, email } = participant;
             return (
-              <p>Nome: {name} Email: {email}</p>
+              <>
+              <p><FaTimes/>Nome: {name}</p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;Email: {email}</p>
+              </>
             )
           })
           :
@@ -88,6 +98,7 @@ const Commitment = styled.div`
   h2 {
     font-size: 20px;
     font-weight: 700;
+    margin-bottom: 10px;
   }
   p {
     font-weight: 500;
