@@ -50,6 +50,8 @@ function Agenda(){
   },[date]);
 
   return (
+    <>
+    <Header>Agenda</Header>
     <PageContainer>
       <Title>Olá, {user.username}! Tem algum compromisso hoje?</Title> 
       <Content>
@@ -61,7 +63,7 @@ function Agenda(){
           <PostCommitment isOpen={openModal} setOpenModal={setOpenModal}/>
         </Create>
         <List>
-          <p>{date}</p>
+          <h1>{dayjs(date).format('DD MMMM YYYY')}</h1>
           { commitments.length !== 0 ?
             commitments.map((commitment) => {
               const { id, type, place, startHour, finishHour, alarmHour, year, month, day } = commitment;
@@ -69,11 +71,11 @@ function Agenda(){
                 <Card 
                   key={id}
                   id={id}
-                  type={type} 
+                  type={type.toUpperCase()} 
                   place={place} 
-                  startHour={startHour} 
-                  finishHour={finishHour} 
-                  alarmHour={alarmHour}
+                  startHour={startHour.substring(0, 5)} 
+                  finishHour={finishHour.substring(0, 5)} 
+                  alarmHour={alarmHour.substring(0, 5)}
                   year={year}
                   month={month}
                   day={day}
@@ -81,18 +83,33 @@ function Agenda(){
               );
             })
             :
-            <p>Não há nenhum compromisso neste dia!</p>
+            <>
+              <p>Não há nenhum compromisso</p>
+              <p>neste dia!</p>
+            </>
           }
         </List>
       </Content>
     </PageContainer>
+    </>
   );
 }
 
 export default Agenda;
 
+const Header = styled.header`
+  background-color: #000000;
+  height: 100px;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 50px;
+  padding: 20px;
+  padding-left: 120px;
+`
+
 const Title = styled.h1`
   font-size: 23px;
+  font-weight: 500;
   margin-bottom: 30px;
 `
 
@@ -110,7 +127,7 @@ const Create = styled.div`
     border: 1px solid #000000;
     border-radius: 20px;
     padding: 10px;
-    background-color: #1087FF;
+    background-color: #000000;
     color: #FFFFFF;
   }
 `
@@ -119,10 +136,10 @@ const List = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 20px;
-  p {
-    font-weight: 700;
-    font-size: 20px;
+  padding: 0px 30px;
+  h1 {
+    font-size: 30px;
+    margin-bottom: 15px;
   }
 `
 

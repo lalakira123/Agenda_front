@@ -9,6 +9,8 @@ import * as requestParticipantsApi from './../../services/api/participants';
 
 import EditCommitment from './EditCommitment';
 
+import './../../assets/css/calendar.css';
+
 function Card({id, type, place, startHour, finishHour, alarmHour, year, month, day}){
     const [ modal, setModal ] = useState();
     const [ participants, setParticipants ] = useState([]);
@@ -44,9 +46,9 @@ function Card({id, type, place, startHour, finishHour, alarmHour, year, month, d
   return(
       <Commitment>
         <h2>{type}</h2>
-        <p>Lugar: {place}</p>
-        <p>Horário: {startHour} - {finishHour}</p>
-        <p>Alarme: {alarmHour}</p>
+        <p><strong>Lugar</strong>: {place}</p>
+        <p><strong>Horário</strong>: {startHour} - {finishHour}</p>
+        <p><strong>Alarme</strong>: {alarmHour}</p>
         <Delete><FaTrash onClick={() => deleteCommitment(id)} /></Delete>
         <Edit><FaPen onClick={() => setModal(true)} /></Edit>
         <Participant><FaRegAddressBook /></Participant>
@@ -61,7 +63,7 @@ function Card({id, type, place, startHour, finishHour, alarmHour, year, month, d
           alarmHour={alarmHour}
           date={`${year}-${month}-${day}`}
           />
-        <p>Participantes:</p>
+        <p><strong>Participantes</strong>:</p>
         { participants.length !== 0 ?
           participants.map((participant) => {
             const { name, email } = participant;
@@ -85,6 +87,13 @@ const Commitment = styled.div`
   padding: 10px;
   h2 {
     font-size: 20px;
+    font-weight: 700;
+  }
+  p {
+    font-weight: 500;
+    strong {
+      font-weight: 600;
+    }
   }
 `
 

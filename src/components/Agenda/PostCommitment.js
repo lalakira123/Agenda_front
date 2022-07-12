@@ -23,10 +23,11 @@ function PostCommitment({isOpen, setOpenModal}){
     content: {
       flexDirection: "column",
       justifyContent: "space-evenly",
-      background: "#BEBEBE",
-      top: '30px',
+      background: "#000000",
+      top: '170px',
       right: 'auto',
-      left: '40%'
+      left: '40%',
+      bottom: '12%'
     }
   };
 
@@ -48,7 +49,7 @@ function PostCommitment({isOpen, setOpenModal}){
         <p>Novo Compromisso</p>
         <p onClick={() => setOpenModal(false)}><FaTimes/></p>
       </Div>
-      <form onSubmit={postCommitment}>
+      <Form onSubmit={postCommitment}>
         <Input 
           placeholder='Compromisso'
           property={'type'} 
@@ -98,7 +99,7 @@ function PostCommitment({isOpen, setOpenModal}){
           state={commitment}
           />
         <button type='submit'>Criar</button>
-      </form>
+      </Form>
     </Modal>
   );
 }
@@ -110,4 +111,24 @@ const Div = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  p {
+    color: #FFFFFF;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+`
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  button {
+    margin-top: 10px;
+    border-radius: 50px;
+    height: 50px;
+    background-color: #000000;
+    font-weight: 700;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    font-size: 15px;
+  }
 `

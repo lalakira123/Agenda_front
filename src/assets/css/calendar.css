@@ -1,0 +1,10 @@
+.react-calendar {
+    border-radius: 20px;
+    padding: 21px;
+    border: 1px solid #000000;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+    font-size: 8px;
+    font-weight: 700;
+}
