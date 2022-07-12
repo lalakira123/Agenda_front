@@ -26,7 +26,7 @@ const Style = styled.div`
     box-shadow: 0px 4px 24px 0px rgba(120, 177, 89, 0.12);
     font-size: 14px;
     padding: 21px;
-    color: #9C9C9C;
+    color: #000000;
     font-weight: 400;
     &::placeholder {
       color: #9C9C9C;

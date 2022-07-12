@@ -4,6 +4,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import dayjs from 'dayjs';
 
+import Header from './../components/Header';
 import PageContainer from './../components/PageContainer';
 import PostCommitment from '../components/Agenda/PostCommitment';
 import Card from './../components/Agenda/Card';
@@ -18,7 +19,7 @@ function Agenda(){
   const [ openModal, setOpenModal ] = useState(false);
   const [ commitments, setCommitments ] = useState([]);
   const { user } = useContext(UserContext);
-  const { update, setUpdate } = useContext(UpdateContext);
+  const { update } = useContext(UpdateContext);
 
   const config = {
     headers: { Authorization: `Bearer ${user.token}`}
@@ -27,10 +28,10 @@ function Agenda(){
   setInterval(() => {
     commitments.forEach((commitment) => {
       if( commitment.alarmHour == `${dayjs().format('HH:mm')}:00`){
-        alert('Ta na hora hein meu xapa');
+        alert(`AVISO: o seu compromisso, ${commitment.type}, já vai começar!`);
       }
     })
-  }, 60000);
+  }, 30000);
 
   useEffect(() => {
     const dateArray = date.split('-');
@@ -53,7 +54,7 @@ function Agenda(){
 
   return (
     <>
-    <Header>Agenda</Header>
+    <Header />
     <PageContainer>
       <Title>Olá, {user.username}! Tem algum compromisso hoje?</Title> 
       <Content>
@@ -98,16 +99,6 @@ function Agenda(){
 }
 
 export default Agenda;
-
-const Header = styled.header`
-  background-color: #000000;
-  height: 100px;
-  color: #FFFFFF;
-  font-weight: 700;
-  font-size: 50px;
-  padding: 20px;
-  padding-left: 120px;
-`
 
 const Title = styled.h1`
   font-size: 23px;
