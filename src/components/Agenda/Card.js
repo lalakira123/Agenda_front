@@ -115,6 +115,7 @@ const Commitment = styled.div`
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 10px;
+    width: 160px;
   }
   p {
     font-weight: 500;
